@@ -131,48 +131,63 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void btn_1(View view) {
+        Log.i(TAG,"button 1");
 
     }
     public void btn_2(View view) {
+        Log.i(TAG,"button 2");
 
     }
     public void btn_3(View view) {
+        Log.i(TAG,"button 3");
 
     }
     public void btn_4(View view) {
+        Log.i(TAG,"button 4");
 
     }
     public void btn_5(View view) {
+        Log.i(TAG,"button 5");
 
     }
     public void btn_6(View view) {
+        Log.i(TAG,"button 6");
 
     }
     public void btn_7(View view) {
+        Log.i(TAG,"button 7");
 
     }
     public void btn_8(View view) {
+        Log.i(TAG,"button 8");
 
     }
     public void btn_9(View view) {
+        Log.i(TAG,"button 9");
 
     }
     public void btn_mul(View view) {
+        Log.i(TAG,"button mul");
 
     }
     public void btn_div(View view) {
+        Log.i(TAG,"button div");
 
     }
     public void btn_plu(View view) {
+        Log.i(TAG,"button plu");
 
     }
     public void btn_min(View view) {
+        Log.i(TAG,"button min");
 
     }
     public void btn_c(View view) {
+        Log.i(TAG,"button C");
 
     }
     public void btn_sum(View view) {
+        Log.i(TAG,"button sum");
 
     }
 
