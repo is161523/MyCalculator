@@ -10,7 +10,9 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "MyCALC";
-    private short option_selected = 0;
+    private short option = 0;
+    private boolean option_selected=false;
+
     private long last_value = 0;
     /*
     0=nothing
@@ -143,10 +145,11 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 0");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("0");
-            option_selected=0;
+            option_selected=false;
+
         }
         else{
             tv_sum.append("0");
@@ -158,10 +161,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 1");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("1");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("1");
@@ -173,10 +176,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 2");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("2");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("2");
@@ -187,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 3");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("3");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("3");
@@ -201,10 +204,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 4");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("4");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("4");
@@ -215,10 +218,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 5");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("5");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("5");
@@ -229,10 +232,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 6");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("6");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("6");
@@ -243,10 +246,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 7");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("7");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("7");
@@ -257,10 +260,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 8");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("8");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("8");
@@ -271,10 +274,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button 9");
 
-        if(option_selected != 0) {
+        if(option_selected) {
             last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("9");
-            option_selected=0;
+            option_selected=false;
         }
         else{
             tv_sum.append("9");
@@ -284,27 +287,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void btn_div(View view) {
         Log.i(TAG,"button div");
-        option_selected=1;
+        option=1;
+        option_selected=true;
 
     }
     public void btn_mul(View view) {
         Log.i(TAG,"button mul");
-        option_selected=2;
+        option=2;
+        option_selected=true;
 
     }
     public void btn_min(View view) {
         Log.i(TAG,"button min");
-        option_selected=3;
+        option=3;
+        option_selected=true;
 
     }
     public void btn_plu(View view) {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
-        Log.i(TAG,"button plu");
-        option_selected=4;
+        Log.i(TAG,"button plu=4");
+        option=4;
+        option_selected=true;
 
 
     }
     public void btn_c(View view) {
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        last_value=0;
+        tv_sum.setText("");
         Log.i(TAG,"button C");
 
     }
@@ -312,8 +322,9 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button sum");
         long temp=0;
-        if(option_selected==4) {
+        if(option==4) {
             temp = last_value + Long.parseLong(tv_sum.getText().toString());
+            Log.i(TAG,"4");
         }
         tv_sum.setText(Long.toString(temp));
 
