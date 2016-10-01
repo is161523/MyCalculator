@@ -1,6 +1,8 @@
 package local.is161518_is161523.mycalculator;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean option_selected=false;
     private boolean number_pressed=false;
 
+
     private long last_value = 0;
     /*
     0=nothing
@@ -25,11 +28,36 @@ public class MainActivity extends AppCompatActivity {
     4=plu
     */
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+
+
+        Log.i(TAG,"OnRestart()");
+
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.i(TAG,"OnDestroy()");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("last_value",last_value);
+        editor.apply();
+
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        last_value= prefs.getLong("last_value",last_value);
+
+        Log.i(TAG,"lv: "+ Long.toString(last_value));
 
 
         final Button btn_0 = (Button) findViewById(R.id.btn_0);
@@ -139,7 +167,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        tv_sum.setText(Long.toString(last_value));
 
 
     }
