@@ -8,10 +8,74 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="local.is161518_is161523.mycalculator.MainActivity">
+    tools:context="local.is161518_is161523.calculator.MainActivity">
 
-    <TextView
+
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:columnCount="4">
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/tv_sum"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            />
+
+        <Button
+            android:layout_column="3"
+            android:text="/"
+            android:id="@+id/btn_div" />
+
+        <Button android:text="7"
+            android:id="@+id/btn_7" />
+        <Button android:text="8"
+            android:id="@+id/btn_8" />
+        <Button android:text="9"
+            android:id="@+id/btn_9" />
+        <Button android:text="x"
+            android:id="@+id/btn_mul" />
+
+        <Button android:text="4"
+            android:id="@+id/btn_4" />
+        <Button android:text="5"
+            android:id="@+id/btn_5" />
+        <Button android:text="6"
+            android:id="@+id/btn_6" />
+
+        <Button android:text="-"
+            android:id="@+id/btn_min" />
+        <Button android:text="1"
+            android:id="@+id/btn_1" />
+        <Button android:text="2"
+            android:id="@+id/btn_2" />
+        <Button android:text="3"
+            android:id="@+id/btn_3" />
+        <Button android:text="+"
+            android:id="@+id/btn_plu" />
+        <Button android:text="0"
+            android:id="@+id/btn_0" />
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:layout_gravity="fill"
+            android:id="@+id/tb_kso" />
+
+        <Button android:text="C"
+            android:id="@+id/btn_c" />
+        <Button android:text="="
+            android:id="@+id/btn_sum" />
+
+
+
+
+
+    </GridLayout>
+
+
 </RelativeLayout>
