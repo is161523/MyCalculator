@@ -1,5 +1,6 @@
 package local.is161518_is161523.mycalculator;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG = "MyCALC";
     private short option = 0;
     private boolean option_selected=false;
+    private boolean number_pressed=false;
 
     private long last_value = 0;
     /*
@@ -147,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 0");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("0");
             option_selected=false;
+            reset_Button_Color();
 
         }
         else{
@@ -163,14 +165,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 1");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("1");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("1");
         }
-
+        number_pressed=true;
 
     }
     public void btn_2(View view) {
@@ -178,13 +180,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 2");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("2");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("2");
         }
+        number_pressed=true;
 
     }
     public void btn_3(View view) {
@@ -192,13 +195,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 3");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("3");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("3");
         }
+        number_pressed=true;
 
     }
     public void btn_4(View view) {
@@ -206,13 +210,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 4");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("4");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("4");
         }
+        number_pressed=true;
 
     }
     public void btn_5(View view) {
@@ -220,13 +225,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 5");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("5");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("5");
         }
+        number_pressed=true;
 
     }
     public void btn_6(View view) {
@@ -234,13 +240,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 6");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("6");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("6");
         }
+        number_pressed=true;
 
     }
     public void btn_7(View view) {
@@ -248,13 +255,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 7");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("7");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("7");
         }
+        number_pressed=true;
 
     }
     public void btn_8(View view) {
@@ -262,13 +270,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 8");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
             tv_sum.setText("8");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("8");
         }
+        number_pressed=true;
 
     }
     public void btn_9(View view) {
@@ -276,71 +285,176 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"button 9");
 
         if(option_selected) {
-            last_value=Long.parseLong(tv_sum.getText().toString());
-            tv_sum.setText("9");
+                tv_sum.setText("9");
             option_selected=false;
+            reset_Button_Color();
         }
         else{
             tv_sum.append("9");
         }
+        number_pressed=true;
 
     }
 
     public void btn_div(View view) {
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        Button btn_div = (Button) findViewById(R.id.btn_div);
         Log.i(TAG,"button div");
+
+        reset_Button_Color();
+        btn_div.setBackgroundResource(android.R.drawable.btn_star);
+        try {
+            if(tv_sum.getText().length() > 0 && last_value!=0 && number_pressed == true) {
+                calc(Long.parseLong(tv_sum.getText().toString()));
+            }else {
+                last_value = Long.parseLong(tv_sum.getText().toString());
+            }
+        }catch (Exception x){}
         option=1;
         option_selected=true;
+        number_pressed=false;
 
     }
     public void btn_mul(View view) {
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        Button btn_mul = (Button) findViewById(R.id.btn_mul);
         Log.i(TAG,"button mul");
+
+        reset_Button_Color();
+        btn_mul.setBackgroundResource(android.R.drawable.btn_star);
+        try {
+            if(tv_sum.getText().length() > 0 && last_value!=0 && number_pressed == true) {
+                calc(Long.parseLong(tv_sum.getText().toString()));
+            }else {
+                last_value = Long.parseLong(tv_sum.getText().toString());
+            }
+        }catch (Exception x){}
         option=2;
         option_selected=true;
+        number_pressed=false;
 
     }
     public void btn_min(View view) {
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        Button btn_min = (Button) findViewById(R.id.btn_min);
         Log.i(TAG,"button min");
+
+        reset_Button_Color();
+        btn_min.setBackgroundResource(android.R.drawable.btn_star);
+        try {
+            if(tv_sum.getText().length() > 0 && last_value!=0 && number_pressed == true) {
+                calc(Long.parseLong(tv_sum.getText().toString()));
+            }else {
+                last_value = Long.parseLong(tv_sum.getText().toString());
+            }
+        }catch (Exception x){}
         option=3;
         option_selected=true;
+        number_pressed=false;
+
 
     }
     public void btn_plu(View view) {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        Button btn_plu = (Button) findViewById(R.id.btn_plu);
         Log.i(TAG,"button plu=4");
+
+        reset_Button_Color();
+        btn_plu.setBackgroundResource(android.R.drawable.btn_star);
+        try {
+            if(tv_sum.getText().length() > 0 && last_value!=0 && number_pressed == true) {
+                calc(Long.parseLong(tv_sum.getText().toString()));
+            }else {
+                last_value = Long.parseLong(tv_sum.getText().toString());
+            }
+        }catch (Exception x){}
         option=4;
         option_selected=true;
+        number_pressed=false;
 
 
     }
+
+    private void reset_Button_Color() {
+        Button btn_plu = (Button) findViewById(R.id.btn_plu);
+        Button btn_mul = (Button) findViewById(R.id.btn_mul);
+        Button btn_min = (Button) findViewById(R.id.btn_min);
+        Button btn_div = (Button) findViewById(R.id.btn_div);
+
+        btn_plu.setBackgroundResource(android.R.drawable.btn_default);
+        btn_mul.setBackgroundResource(android.R.drawable.btn_default);
+        btn_min.setBackgroundResource(android.R.drawable.btn_default);
+        btn_div.setBackgroundResource(android.R.drawable.btn_default);
+
+    }
+
+
     public void btn_c(View view) {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         last_value=0;
         tv_sum.setText("");
         Log.i(TAG,"button C");
+        option_selected=false;
+        number_pressed=false;
+        reset_Button_Color();
 
     }
     public void btn_sum(View view) {
-        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button sum");
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         long temp=0;
 
         switch (option){
             case 1:
                 temp = last_value / Long.parseLong(tv_sum.getText().toString());
+                last_value = temp;
                 break;
             case 2:
                 temp = last_value * Long.parseLong(tv_sum.getText().toString());
+                last_value = temp;
                 break;
             case 3:
                 temp = last_value - Long.parseLong(tv_sum.getText().toString());
+                last_value = temp;
                 break;
             case 4:
                 temp = last_value + Long.parseLong(tv_sum.getText().toString());
+                last_value = temp;
                 break;
         }
 
         tv_sum.setText(Long.toString(temp));
+        number_pressed=false;
+    }
 
+    private void calc(long value){
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        long temp=0;
+
+        switch (option){
+            case 1:
+                if(value != 0) {
+                    temp = last_value / value;
+                    last_value = temp;
+                }
+                break;
+            case 2:
+                temp = last_value * value;
+                last_value=temp;
+                break;
+            case 3:
+                temp = last_value - value;
+                last_value=temp;
+                break;
+            case 4:
+                temp = last_value + value;
+                Log.i(TAG,"last_value: "+Long.toString(last_value));
+                Log.i(TAG,"last: "+Long.toString(value));
+                last_value=temp;
+                break;
+        }
+
+        tv_sum.setText(Long.toString(temp));
 
     }
 
