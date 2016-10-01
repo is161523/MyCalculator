@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -322,10 +323,22 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"button sum");
         long temp=0;
-        if(option==4) {
-            temp = last_value + Long.parseLong(tv_sum.getText().toString());
-            Log.i(TAG,"4");
+
+        switch (option){
+            case 1:
+                temp = last_value / Long.parseLong(tv_sum.getText().toString());
+                break;
+            case 2:
+                temp = last_value * Long.parseLong(tv_sum.getText().toString());
+                break;
+            case 3:
+                temp = last_value - Long.parseLong(tv_sum.getText().toString());
+                break;
+            case 4:
+                temp = last_value + Long.parseLong(tv_sum.getText().toString());
+                break;
         }
+
         tv_sum.setText(Long.toString(temp));
 
 
