@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -166,9 +169,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         tv_sum.setText(Long.toString(last_value));
+
+
+        //Keep-Screen-On Button -> https://developer.android.com/training/scheduling/wakelock.html
+        //ToggleButton -> https://developer.android.com/guide/topics/ui/controls/togglebutton.html
+        final ToggleButton tb_kso = (ToggleButton) findViewById(R.id.tb_kso);
+        tb_kso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.i(TAG,"KeepScreenOn = activated");
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                } else {
+                    Log.i(TAG,"KeepScreenOn = deactivated");
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                }
+            }
+        });
 
 
     }
