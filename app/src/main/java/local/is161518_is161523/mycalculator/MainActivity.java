@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public static final short OP_MUL = 2;
     public static final short OP_MINUS = 3;
     public static final short OP_PLUS = 4;
+    public final static String TAG = "MyCALC";
     private short option = 0;
     /*
     0=nothing
@@ -29,14 +30,10 @@ public class MainActivity extends AppCompatActivity {
     4=plu
     */
 
-
-    public final static String TAG = "MyCALC";
-
     private boolean option_selected=false;
     private boolean number_pressed=false;
-    private long textview_number=0;
-    private long last_value = 0;
-
+    private float textview_number=0;
+    private float last_value = 0;
 
     @Override
     protected void onRestart(){
@@ -58,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"onStop()");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong("last_value",last_value);
-        editor.putLong("textview_number",textview_number);
+        editor.putFloat("last_value",last_value);
+        editor.putFloat("textview_number",textview_number);
         editor.apply();
     }
 
@@ -69,13 +66,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        last_value= prefs.getLong("last_value",0);
-        textview_number= prefs.getLong("textview_number",0);
+        last_value= prefs.getFloat("last_value",0);
+        textview_number= prefs.getFloat("textview_number",0);
 
-        Log.i(TAG,"lv: "+ Long.toString(last_value));
+        Log.i(TAG,"lv: "+ Float.toString(last_value));
 
-        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
-        tv_sum.setText(Long.toString(textview_number));
+        set_TextView(textview_number);
 
         final Button btn_0 = (Button) findViewById(R.id.btn_0);
         btn_0.setOnClickListener(new View.OnClickListener() {
@@ -153,18 +149,21 @@ public class MainActivity extends AppCompatActivity {
                 operatorButton_pressed(v, OP_MUL);
             }
         });
+
         final Button btn_div = (Button) findViewById(R.id.btn_div);
         btn_div.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 operatorButton_pressed(v, OP_DIV);
             }
         });
+
         final Button btn_plu = (Button) findViewById(R.id.btn_plu);
         btn_plu.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 operatorButton_pressed(v, OP_PLUS);
             }
         });
+
         final Button btn_min = (Button) findViewById(R.id.btn_min);
         btn_min.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -181,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 reset_Button_Color();
             }
         });
+
         final Button btn_c = (Button) findViewById(R.id.btn_c);
         btn_c.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -203,35 +203,49 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    public void set_TextView(float f){
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        tv_sum.setText(String.format("%.2f", f));
+    }
 
+    public void set_TextView(String s){
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        tv_sum.setText(s);
+    }
+
+    public void append_TextView(float f){
+        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        float temp = Float.parseFloat(tv_sum.getText().toString());
+        tv_sum.setText(String.format("%.0f", temp));
+        tv_sum.append(String.format("%.2f", f));
     }
 
     //set TextView according to which Number-Button was pressed.
-    public void numberButton_pressed(View view, long number) {
+    public void numberButton_pressed(View view, float number) {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"Number-Button: " + number + " pressed! Lenght:" + tv_sum.length());
-        if(tv_sum.length()<9) { //Calc only support 9 Chars
-            if (option_selected || textview_number == 0) {
-                try {
-                    tv_sum.setText(String.valueOf(number));
-                } catch (NullPointerException e) {
-                    tv_sum.setText("0");
-                }
-                option_selected = false;
-                reset_Button_Color();
-            } else {
-                try {
-                    tv_sum.append(String.valueOf(number));
-                } catch (NullPointerException e) {
-                    tv_sum.setText("0");
-                }
-            }
-            number_pressed = true;
 
-            textview_number = Long.parseLong(tv_sum.getText().toString());
-            Log.i(TAG, "Textview is now: " + textview_number);
+        if (option_selected || textview_number == 0) {
+            try {
+                set_TextView(number);
+            } catch (NullPointerException e) {
+                set_TextView(0);
+            }
+            option_selected = false;
+            reset_Button_Color();
+        } else if(tv_sum.length()<11) { //Calc only support 9 Chars)
+            try {
+                append_TextView(number);
+            } catch (NullPointerException e) {
+                set_TextView(0);
+            }
         }
+        number_pressed = true;
+        Log.i(TAG,"TV_SUM:" + tv_sum.getText().toString());
+        textview_number = Float.parseFloat(tv_sum.getText().toString());
+
     }
 
     //Setup for Calculation!
@@ -275,34 +289,32 @@ public class MainActivity extends AppCompatActivity {
         number_pressed=false;
     }
 
-
     public void calculate(View view){
-        long calc_sum = 0;
-        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
+        float calc_sum = 0;
 
         switch (option){
             case OP_DIV:
                 if(textview_number==0){
-                    tv_sum.setText("Fehler");
+                    set_TextView("Fehler");
                     textview_number=0;
                     last_value=0;
                 }
                 else{
                     calc_sum=last_value/textview_number;
-                    tv_sum.setText(Long.toString(calc_sum));
+                    set_TextView(calc_sum);
                 }
                 break;
             case OP_MUL:
                 calc_sum=last_value*textview_number;
-                tv_sum.setText(Long.toString(calc_sum));
+                set_TextView(calc_sum);
                 break;
             case OP_MINUS:
                 calc_sum=last_value-textview_number;
-                tv_sum.setText(Long.toString(calc_sum));
+                set_TextView(calc_sum);
                 break;
             case OP_PLUS:
                 calc_sum=last_value+textview_number;
-                tv_sum.setText(Long.toString(calc_sum));
+                set_TextView(calc_sum);
                 break;
         }
         last_value=calc_sum;
@@ -323,24 +335,15 @@ public class MainActivity extends AppCompatActivity {
         btn_min.setTextColor(Color.BLACK);
         btn_div.getBackground().clearColorFilter();
         btn_div.setTextColor(Color.BLACK);
-
     }
 
     public void btn_c(View view) {
-
         last_value=0;
         textview_number=0;
         option_selected=false;
         number_pressed=false;
-
-        TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
-        tv_sum.setText("0");
-
+        set_TextView(0);
         reset_Button_Color();
-
         Log.i(TAG,"button C");
     }
-
-
-
 }
