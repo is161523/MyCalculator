@@ -49,12 +49,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         Log.i(TAG,"OnDestroy()");
+
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.i(TAG,"onStop()");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("last_value",last_value);
+        editor.putLong("textview_number",textview_number);
         editor.apply();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +69,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        last_value= prefs.getLong("last_value",last_value);
+        last_value= prefs.getLong("last_value",0);
+        textview_number= prefs.getLong("textview_number",0);
 
         Log.i(TAG,"lv: "+ Long.toString(last_value));
 
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
-        tv_sum.setText(Long.toString(last_value));
+        tv_sum.setText(Long.toString(textview_number));
 
         final Button btn_0 = (Button) findViewById(R.id.btn_0);
         btn_0.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calculate(v);
                 last_value=0;
+                reset_Button_Color();
             }
         });
         final Button btn_c = (Button) findViewById(R.id.btn_c);
@@ -201,30 +210,28 @@ public class MainActivity extends AppCompatActivity {
     //set TextView according to which Number-Button was pressed.
     public void numberButton_pressed(View view, long number) {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
-        Log.i(TAG,"Number-Button: " + number + " pressed!");
+        Log.i(TAG,"Number-Button: " + number + " pressed! Lenght:" + tv_sum.length());
+        if(tv_sum.length()<9) { //Calc only support 9 Chars
+            if (option_selected || textview_number == 0) {
+                try {
+                    tv_sum.setText(String.valueOf(number));
+                } catch (NullPointerException e) {
+                    tv_sum.setText("0");
+                }
+                option_selected = false;
+                reset_Button_Color();
+            } else {
+                try {
+                    tv_sum.append(String.valueOf(number));
+                } catch (NullPointerException e) {
+                    tv_sum.setText("0");
+                }
+            }
+            number_pressed = true;
 
-        if(option_selected || textview_number==0) {
-            try{
-                tv_sum.setText(String.valueOf(number));
-            }
-            catch(NullPointerException e){
-                tv_sum.setText("0");
-            }
-            option_selected=false;
-            reset_Button_Color();
+            textview_number = Long.parseLong(tv_sum.getText().toString());
+            Log.i(TAG, "Textview is now: " + textview_number);
         }
-        else{
-            try{
-                tv_sum.append(String.valueOf(number));
-            }
-            catch(NullPointerException e){
-                tv_sum.setText("0");
-            }
-        }
-        number_pressed=true;
-
-        textview_number = Long.parseLong(tv_sum.getText().toString());
-        Log.i(TAG,"Textview is now: " + textview_number);
     }
 
     //Setup for Calculation!
