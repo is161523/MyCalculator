@@ -217,9 +217,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void append_TextView(float f){
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
-        float temp = Float.parseFloat(tv_sum.getText().toString());
-        tv_sum.setText(String.format("%.0f", temp));
-        tv_sum.append(String.format("%.2f", f));
+
+        //float temp = Float.parseFloat(tv_sum.getText().toString());
+        //Log.i(TAG,"TV_SUM-InAppend: " + Float.toString(temp) + "float: "+ Float.toString(f));
+        //tv_sum.setText(String.format("%.0f", temp));
+        //tv_sum.append(String.format("%.2f", f));
+
+        String str = tv_sum.getText().toString();   //get String vom TV
+        String c = Float.toString(f);               //Convert to Strig
+        c=c.substring(0,1);                         //Convert from "x.0" to "x"
+        str = new StringBuffer(str).insert(str.length()-3, c).toString();
+        tv_sum.setText(str);
+
     }
 
     //set TextView according to which Number-Button was pressed.
