@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
         Log.i(TAG,"Number-Button: " + number + " pressed! Lenght:" + tv_sum.length());
 
-        if (option_selected || textview_number == 0) {
+        if (option_selected || textview_number == 0 || !number_pressed) {
             try {
                 set_TextView(number);
             } catch (NullPointerException e) {
@@ -319,6 +319,8 @@ public class MainActivity extends AppCompatActivity {
         }
         last_value=calc_sum;
         textview_number=calc_sum;
+        option_selected=false;
+        number_pressed=false;
     }
 
     private void reset_Button_Color() {
