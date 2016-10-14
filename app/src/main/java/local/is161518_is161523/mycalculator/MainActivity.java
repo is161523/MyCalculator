@@ -218,16 +218,10 @@ public class MainActivity extends AppCompatActivity {
     public void append_TextView(float f){
         TextView tv_sum = (TextView) findViewById(R.id.tv_sum);
 
-        //float temp = Float.parseFloat(tv_sum.getText().toString());
-        //Log.i(TAG,"TV_SUM-InAppend: " + Float.toString(temp) + "float: "+ Float.toString(f));
-        //tv_sum.setText(String.format("%.0f", temp));
-        //tv_sum.append(String.format("%.2f", f));
-
-        String str = tv_sum.getText().toString();   //get String vom TV
-        String c = Float.toString(f);               //Convert to Strig
-        c=c.substring(0,1);                         //Convert from "x.0" to "x"
-        str = new StringBuffer(str).insert(str.length()-3, c).toString();
-        tv_sum.setText(str);
+        float temp = Float.parseFloat(tv_sum.getText().toString());
+        Log.i(TAG,"TV_SUM-InAppend: " + Float.toString(temp) + "float: "+ Float.toString(f));
+        tv_sum.setText(String.format("%.0f", temp));
+        tv_sum.append(String.format("%.2f", f));
 
     }
 
@@ -300,31 +294,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculate(View view){
         float calc_sum = 0;
-
-        switch (option){
-            case OP_DIV:
-                if(textview_number==0){
-                    set_TextView("Fehler");
-                    textview_number=0;
-                    last_value=0;
-                }
-                else{
-                    calc_sum=last_value/textview_number;
+        if (number_pressed) {
+            switch (option) {
+                case OP_DIV:
+                    if (textview_number == 0) {
+                        set_TextView("Fehler");
+                        textview_number = 0;
+                        last_value = 0;
+                    } else {
+                        calc_sum = last_value / textview_number;
+                        set_TextView(calc_sum);
+                    }
+                    break;
+                case OP_MUL:
+                    calc_sum = last_value * textview_number;
                     set_TextView(calc_sum);
-                }
-                break;
-            case OP_MUL:
-                calc_sum=last_value*textview_number;
-                set_TextView(calc_sum);
-                break;
-            case OP_MINUS:
-                calc_sum=last_value-textview_number;
-                set_TextView(calc_sum);
-                break;
-            case OP_PLUS:
-                calc_sum=last_value+textview_number;
-                set_TextView(calc_sum);
-                break;
+                    break;
+                case OP_MINUS:
+                    calc_sum = last_value - textview_number;
+                    set_TextView(calc_sum);
+                    break;
+                case OP_PLUS:
+                    calc_sum = last_value + textview_number;
+                    set_TextView(calc_sum);
+                    break;
+            }
         }
         last_value=calc_sum;
         textview_number=calc_sum;
